@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
+  // Default Text Color white and black
+  static const white = Color(0xFFFFFFFF);
+  static const black = Color(0xFF000000);
+
   // Grey
   static const Color grey100 = Color(0xFFF9FAFB);
   static const Color grey200 = Color(0xFFF4F6F8);

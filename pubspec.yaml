@@ -14,6 +14,23 @@ dependencies:
 
   cupertino_icons: ^1.0.8
 
+  # UI And Utils
+  flutter_screenutil: ^5.9.3
+  intl: ^0.20.2
+  google_fonts: ^8.0.2
+  flutter_svg: ^2.2.3
+  pin_code_fields: ^8.0.1
+
+  # Navigation
+  go_router: ^17.1.0
+
+  # State Management
+  flutter_riverpod: ^2.5.1
+
+  # SQLite Database
+  sqflite: ^2.3.3
+  path: ^1.9.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -21,11 +38,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # assets:
-  #   - assets/images/
-
-  # fonts:
-  #   - family: YourFont
-  #     fonts:
-  #       - asset: assets/fonts/YourFont-Regular.ttf
