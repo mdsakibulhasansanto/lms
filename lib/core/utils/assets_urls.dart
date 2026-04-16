@@ -10,4 +10,6 @@ class AssetsUrls {
   static const String elearning_onboarding_b = '$_baseUrl/elearning_onboarding_b.png';
   static const String teacher = '$_baseUrl/teacher.png';
   static const String book = '$_baseUrl/book.png';
+  static const String google = '$_baseUrl/google.png';
+  static const String apple = '$_baseUrl/apple.png';
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lms/core/utils/assets_urls.dart';
 import 'package:lms/core/widgets/app_primary_button.dart';
+import 'package:lms/features/auth/view/screen/login_screen.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 
@@ -94,7 +95,7 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
                 ),
               ),
               SizedBox(height: 8.h),
-              Center(
+              /*Center(
                 child: RichText(
                   text: TextSpan(
                     text: 'Already have an account? ',
@@ -112,6 +113,41 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
                           decorationColor: AppColors.primary500,
                         ),
                         recognizer: _logInRecognizer,
+                      ),
+                    ],
+                  ),
+                ),
+              ),*/
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: 'Already have an account? ',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.grey.shade500,
+                    ),
+                    children: [
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                          },
+                          borderRadius: BorderRadius.circular(4),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 4.w),
+                            child: Text(
+                              'Log In',
+                              style: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -201,6 +237,54 @@ class _RoleTile extends StatelessWidget {
                 color: AppColors.primary500,
                 size: 20.sp,
               ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class LoginFooterText extends StatelessWidget {
+  const LoginFooterText({
+    super.key,
+    required this.onLoginTap,
+  });
+
+  final VoidCallback onLoginTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: RichText(
+        text: TextSpan(
+          text: 'Already have an account? ',
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: Colors.grey.shade500,
+          ),
+          children: [
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: InkWell(
+                onTap: onLoginTap,
+                borderRadius: BorderRadius.circular(4),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 4.w),
+                  child: Text(
+                    'Log In',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.blue,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
