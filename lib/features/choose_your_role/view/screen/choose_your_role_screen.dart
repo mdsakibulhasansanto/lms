@@ -54,7 +54,7 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
               SizedBox(height: 48.h),
               Text(
                 'Select how you want to use the app',
-                style: AppTextStyles.publicSans_regular_14_center(
+                style: AppTextStyles.publicSans_regular_16_center(
                   color: AppColors.black,
                 ),
               ),
