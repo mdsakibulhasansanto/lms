@@ -1,11 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lms/core/router/app_route_name.dart';
 import 'package:lms/core/utils/assets_urls.dart';
 import 'package:lms/core/widgets/app_primary_button.dart';
-import 'package:lms/features/auth/view/screen/login_screen.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../widget/role_tile.dart';
 
 class ChooseYourRoleScreen extends StatefulWidget {
   const ChooseYourRoleScreen({super.key});
@@ -57,7 +59,7 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
                 ),
               ),
               SizedBox(height: 12.h),
-              _RoleTile(
+              RoleTile(
                 assetIcon: AssetsUrls.book,
                 title: 'Student',
                 subtitle: 'Browse courses, learn new skills',
@@ -65,7 +67,7 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
                 onTap: () => setState(() => _selectedRole = 'student'),
               ),
               SizedBox(height: 12.h),
-              _RoleTile(
+              RoleTile(
                 assetIcon: AssetsUrls.teacher,
                 title: 'Instructor',
                 subtitle: 'Create courses, teach students, and earn',
@@ -73,12 +75,18 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
                 onTap: () => setState(() => _selectedRole = 'instructor'),
               ),
               const Spacer(),
+
               PrimaryButton(
-                onPressed: () {},
-                text: 'Continue',
-                isActive: isActive,
+                  onPressed: isActive ? () {
+                    context.pushNamed(AppRouteName.signUpScreen);
+                  } : null,
+                  text: 'Continue', isActive: isActive,
+                  width: double.infinity, height: 52.h,
+                  radius: 8.r,
+                  backgroundColor: isActive ? AppColors.primary500 : const Color(0xFFB1D7FF),
+                  textColor: AppColors.white
               ),
-              SizedBox(height: 4.h),
+              SizedBox(height: 16.h),
               Center(
                 child: TextButton(
                   onPressed: () {},
@@ -89,62 +97,30 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
                   child: Text(
                     'Decide later',
                     style: AppTextStyles.publicSans_medium_16(
-                      color: AppColors.grey600,
+                      color: AppColors.grey500,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 8.h),
-              /*Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: 'Already have an account? ',
-                    style: AppTextStyles.publicSans_regular_14_center(
-                      color: AppColors.grey500,
-                    ),
-                    children: [
-                      TextSpan(
-                        text: 'Log In',
-                        style: AppTextStyles.publicSans_semiBold_16_center(
-                          color: AppColors.primary500,
-                        ).copyWith(
-                          fontSize: 14.sp,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.primary500,
-                        ),
-                        recognizer: _logInRecognizer,
-                      ),
-                    ],
-                  ),
-                ),
-              ),*/
+              SizedBox(height: 78.h),
               Center(
                 child: RichText(
                   text: TextSpan(
                     text: 'Already have an account? ',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Colors.grey.shade500,
-                    ),
+                    style: AppTextStyles.publicSans_regular_16_center(color: AppColors.primary300),
                     children: [
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
                         child: InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+                          onTap: () {
+                            context.pushNamed(AppRouteName.loginScreen);
                           },
                           borderRadius: BorderRadius.circular(4),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 4.w),
                             child: Text(
                               'Log In',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.blue,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Colors.blue,
-                              ),
+                              style: AppTextStyles.publicSans_regular_16_center(color: AppColors.primary500),
                             ),
                           ),
                         ),
@@ -153,7 +129,7 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: 24.h),
+              SizedBox(height: 90.h),
             ],
           ),
         ),
@@ -162,132 +138,5 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
   }
 }
 
-class _RoleTile extends StatelessWidget {
-  final String assetIcon;
-  final String title;
-  final String subtitle;
-  final bool isSelected;
-  final VoidCallback onTap;
-
-  const _RoleTile({
-    required this.assetIcon,
-    required this.title,
-    required this.subtitle,
-    required this.isSelected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary50 : AppColors.white,
-          border: Border.all(
-            color: isSelected ? AppColors.primary500 : AppColors.grey300,
-            width: 1.5,
-          ),
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 40.w,
-              height: 40.h,
-              decoration: BoxDecoration(
-                color: isSelected ? AppColors.white : AppColors.primary100,
-                borderRadius: BorderRadius.circular(8.r),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(8.r),
-                child: Image.asset(
-                  assetIcon,
-                  width: 20.w,
-                  height: 20.h,
-
-                ),
-              ),
-            ),
-            SizedBox(width: 12.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: AppTextStyles.publicSans_semiBold_16_center(
-                      color: AppColors.grey800,
-                    ),
-                  ),
-                  SizedBox(height: 2.h),
-                  Text(
-                    subtitle,
-                    style: AppTextStyles.publicSans_regular_14_center(
-                      color: AppColors.grey500,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            if (isSelected)
-              Icon(
-                Icons.check,
-                color: AppColors.primary500,
-                size: 20.sp,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 
-
-class LoginFooterText extends StatelessWidget {
-  const LoginFooterText({
-    super.key,
-    required this.onLoginTap,
-  });
-
-  final VoidCallback onLoginTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: RichText(
-        text: TextSpan(
-          text: 'Already have an account? ',
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: Colors.grey.shade500,
-          ),
-          children: [
-            WidgetSpan(
-              alignment: PlaceholderAlignment.middle,
-              child: InkWell(
-                onTap: onLoginTap,
-                borderRadius: BorderRadius.circular(4),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4.w),
-                  child: Text(
-                    'Log In',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Colors.blue,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

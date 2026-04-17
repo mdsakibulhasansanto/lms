@@ -2,6 +2,9 @@ import 'package:go_router/go_router.dart';
 import 'package:lms/core/router/app_route_name.dart';
 import 'package:lms/core/router/app_route_path.dart';
 import 'package:lms/features/auth/view/screen/login_email_screen.dart';
+import 'package:lms/features/auth/view/screen/login_screen.dart';
+import 'package:lms/features/auth/view/screen/sign_up_email_screen.dart';
+import 'package:lms/features/auth/view/screen/sign_up_screen.dart';
 import 'package:lms/features/splash_onboarding/view/first_onboarding_screen.dart';
 import 'package:lms/features/splash_onboarding/view/splash_screen.dart';
 
@@ -32,10 +35,24 @@ class AppRouter {
       //=========================== Authentication============================
 
       GoRoute(
+        path: AppRoutePath.loginScreen,
+        name: AppRouteName.loginScreen,
+        builder: (context, state) => LoginScreen(),
+      ),
+      GoRoute(
         path: AppRoutePath.loginEmailScreen,
         name: AppRouteName.loginEmailScreen,
         builder: (context, state) => LoginEmailScreen(),
-
+      ),
+      GoRoute(
+        path: AppRoutePath.signUpScreen,
+        name: AppRouteName.signUpScreen,
+        builder: (context, state) => SignUpScreen(),
+      ),
+      GoRoute(
+        path: AppRoutePath.signUpEmailScreen,
+        name: AppRouteName.signUpEmailScreen,
+        builder: (context, state) => SignUpEmailScreen(),
       ),
 
 

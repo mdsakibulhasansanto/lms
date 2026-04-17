@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lms/core/theme/app_text_styles.dart';
 import '../theme/app_colors.dart';
 
 class PrimaryButton extends StatelessWidget {
@@ -53,13 +54,7 @@ class PrimaryButton extends StatelessWidget {
             child: Text(
               text,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: fontSize ?? 16.sp,
-                fontWeight: FontWeight.w600,
-                fontFamily: GoogleFonts.publicSans().fontFamily,
-                color: textColor ?? AppColors.white,
-                letterSpacing: 0,
-              ),
+              style: AppTextStyles.publicSans_semiBold_16_center(color: AppColors.white),
             ),
           ),
         ),
