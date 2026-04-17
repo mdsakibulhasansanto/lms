@@ -4,13 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lms/core/router/app_route_name.dart';
-
 import 'package:lms/core/theme/app_colors.dart';
 import 'package:lms/core/theme/app_text_styles.dart';
-import 'package:lms/core/widgets/app_primary_button.dart';
 import 'package:lms/features/auth/viewmodel/auth_provider/auth_provider.dart';
-
-import '../widget/country_code_picker.dart';
+import '../widgets/auth_auth_switch_row_widget.dart';
+import '../widgets/auth_error_text_widget.dart';
+import '../widgets/auth_primary_button_widget.dart';
+import '../widgets/auth_text_field_widget.dart';
+import '../widgets/auth_title_widget.dart';
+import '../widgets/country_code_picker.dart';
 
 class SignUpEmailScreen extends ConsumerStatefulWidget {
   const SignUpEmailScreen({super.key});
@@ -52,14 +54,21 @@ class _SignUpEmailScreenState extends ConsumerState<SignUpEmailScreen> {
       _hasTermsError = !_agreedToTerms;
     });
 
-    if (_hasFullNameError || _hasEmailError || _hasPhoneError || _hasPasswordError || _hasTermsError) return;
+    if (_hasFullNameError ||
+        _hasEmailError ||
+        _hasPhoneError ||
+        _hasPasswordError ||
+        _hasTermsError)
+      return;
 
-    final success = await ref.read(authProvider.notifier).register(
-      name: _fullNameController.text.trim(),
-      email: _emailController.text.trim(),
-      phone: _phoneController.text.trim(),
-      password: _passwordController.text,
-    );
+    final success = await ref
+        .read(authProvider.notifier)
+        .register(
+          name: _fullNameController.text.trim(),
+          email: _emailController.text.trim(),
+          phone: _phoneController.text.trim(),
+          password: _passwordController.text,
+        );
 
     if (!mounted) return;
 
@@ -84,7 +93,8 @@ class _SignUpEmailScreenState extends ConsumerState<SignUpEmailScreen> {
           keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height -
+              minHeight:
+                  MediaQuery.of(context).size.height -
                   MediaQuery.of(context).padding.top -
                   MediaQuery.of(context).padding.bottom,
             ),
@@ -93,41 +103,179 @@ class _SignUpEmailScreenState extends ConsumerState<SignUpEmailScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(height: 70.h),
-                  _buildTitle(),
+                  const AuthTitleWidget(title: 'Sign Up'),
                   SizedBox(height: 48.h),
-                  _buildTextField(
+                  AuthTextFieldWidget(
                     controller: _fullNameController,
-                    hint: 'Full name',
+                    hintText: 'Full name',
                     keyboardType: TextInputType.name,
                     hasError: _hasFullNameError,
-                    errorText: 'Full name is required.',
                     onChanged: (_) => setState(() => _hasFullNameError = false),
                   ),
+                  if (_hasFullNameError) ...[
+                    SizedBox(height: 4.h),
+                    const AuthErrorTextWidget(text: 'Full name is required.'),
+                  ],
                   SizedBox(height: 20.h),
-                  _buildTextField(
+                  AuthTextFieldWidget(
                     controller: _emailController,
-                    hint: 'Email address',
+                    hintText: 'Email address',
                     keyboardType: TextInputType.emailAddress,
                     hasError: _hasEmailError,
-                    errorText: 'Email address is required.',
                     onChanged: (_) => setState(() => _hasEmailError = false),
                   ),
+                  if (_hasEmailError) ...[
+                    SizedBox(height: 4.h),
+                    const AuthErrorTextWidget(
+                      text: 'Email address is required.',
+                    ),
+                  ],
                   SizedBox(height: 20.h),
-                  _buildPhoneField(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CountryCodePicker(
+                            selectedCountry: _selectedCountry,
+                            onChanged: (c) =>
+                                setState(() => _selectedCountry = c),
+                          ),
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: AuthTextFieldWidget(
+                              controller: _phoneController,
+                              hintText: '0000000000',
+                              keyboardType: TextInputType.phone,
+                              hasError: _hasPhoneError,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              onChanged: (_) =>
+                                  setState(() => _hasPhoneError = false),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (_hasPhoneError) ...[
+                        SizedBox(height: 4.h),
+                        const AuthErrorTextWidget(
+                          text: 'Phone number is required.',
+                        ),
+                      ],
+                    ],
+                  ),
                   SizedBox(height: 20.h),
-                  _buildPasswordField(),
+                  AuthTextFieldWidget(
+                    controller: _passwordController,
+                    hintText: 'Password',
+                    obscureText: _obscurePassword,
+                    hasError: _hasPasswordError,
+                    onChanged: (_) => setState(() => _hasPasswordError = false),
+                    suffixIcon: GestureDetector(
+                      onTap: () =>
+                          setState(() => _obscurePassword = !_obscurePassword),
+                      child: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: AppColors.primary300,
+                        size: 20.w,
+                      ),
+                    ),
+                  ),
+                  if (_hasPasswordError) ...[
+                    SizedBox(height: 4.h),
+                    const AuthErrorTextWidget(text: 'Password is required.'),
+                  ],
                   SizedBox(height: 20.h),
-                  _buildTermsRow(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 20.w,
+                            height: 20.h,
+                            child: Checkbox(
+                              value: _agreedToTerms,
+                              onChanged: (val) => setState(() {
+                                _agreedToTerms = val ?? false;
+                                _hasTermsError = false;
+                              }),
+                              activeColor: AppColors.primary500,
+                              side: BorderSide(
+                                color: _hasTermsError
+                                    ? const Color(0xFFE53935)
+                                    : AppColors.grey400,
+                              ),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                style:
+                                    AppTextStyles.publicSans_regular_14_center(
+                                      color: AppColors.grey600,
+                                    ),
+                                children: [
+                                  const TextSpan(
+                                    text:
+                                        "By registering, I confirm that I accept ShowMe's ",
+                                  ),
+                                  TextSpan(
+                                    text: 'Terms & Conditions',
+                                    style:
+                                        AppTextStyles.publicSans_regular_14_center(
+                                          color: AppColors.primary500,
+                                        ).copyWith(
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                  ),
+                                  const TextSpan(text: ', and '),
+                                  TextSpan(
+                                    text: 'Privacy Policy',
+                                    style:
+                                        AppTextStyles.publicSans_regular_14_center(
+                                          color: AppColors.primary500,
+                                        ).copyWith(
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (_hasTermsError) ...[
+                        SizedBox(height: 4.h),
+                        const AuthErrorTextWidget(
+                          text: 'You must accept the terms to continue.',
+                        ),
+                      ],
+                      SizedBox(height: 10.h),
+                    ],
+                  ),
                   Spacer(),
-                  PrimaryButton(
-                    height: 52.h,
+                  AuthPrimaryButtonWidget(
                     onPressed: _onSignUpPressed,
                     text: 'Sign up',
-                    backgroundColor: AppColors.primary500,
-                    radius: 8.r,
                   ),
                   const Spacer(),
-                  _buildSignInRow(),
+                  AuthAuthSwitchRowWidget(
+                    questionText: 'Already have an account? ',
+                    actionText: 'Sign In',
+                    onTap: () => Navigator.pop(context),
+                  ),
                   SizedBox(height: 102.h),
                 ],
               ),
@@ -135,262 +283,6 @@ class _SignUpEmailScreenState extends ConsumerState<SignUpEmailScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTitle() {
-    return Text(
-      'Sign Up',
-      style: AppTextStyles.publicSans_semiBold_24_center(color: AppColors.black),
-      textAlign: TextAlign.center,
-    );
-  }
-
-  Widget _buildTextField({
-    required TextEditingController controller,
-    required String hint,
-    TextInputType keyboardType = TextInputType.text,
-    bool hasError = false,
-    String? errorText,
-    void Function(String)? onChanged,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: 52.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(
-              color: hasError ? const Color(0xFFE53935) : AppColors.bordersColore,
-              width: hasError ? 1.w : 0.5.w,
-            ),
-          ),
-          child: TextField(
-            controller: controller,
-            keyboardType: keyboardType,
-            onChanged: onChanged ?? (_) => setState(() {}),
-            style: AppTextStyles.publicSans_regular_16_center(color: AppColors.black),
-            decoration: InputDecoration(
-              hintText: hint,
-              hintStyle: AppTextStyles.publicSans_regular_16_center(color: AppColors.hintColore),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-              border: InputBorder.none,
-              isCollapsed: true,
-            ),
-          ),
-        ),
-        if (hasError && errorText != null) ...[
-          SizedBox(height: 4.h),
-          Row(
-            children: [
-              Icon(Icons.error_outline, color: const Color(0xFFE53935), size: 14.w),
-              SizedBox(width: 4.w),
-              Text(
-                errorText,
-                style: AppTextStyles.publicSans_regular_14_center(color: const Color(0xFFE53935)),
-              ),
-            ],
-          ),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildPhoneField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CountryCodePicker(
-              selectedCountry: _selectedCountry,
-              onChanged: (c) => setState(() => _selectedCountry = c),
-            ),
-            SizedBox(width: 8.w),
-            Expanded(
-              child: Container(
-                height: 52.h,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.r),
-                  border: Border.all(
-                    color: _hasPhoneError ? const Color(0xFFE53935) : AppColors.bordersColore,
-                    width: _hasPhoneError ? 1.w : 0.5.w,
-                  ),
-                ),
-                child: TextField(
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  onChanged: (_) => setState(() => _hasPhoneError = false),
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  style: AppTextStyles.publicSans_regular_16_center(color: AppColors.black),
-                  decoration: InputDecoration(
-                    hintText: '0000000000',
-                    hintStyle: AppTextStyles.publicSans_regular_16_center(color: AppColors.hintColore),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-                    border: InputBorder.none,
-                    isCollapsed: true,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        if (_hasPhoneError) ...[
-          SizedBox(height: 4.h),
-          Row(
-            children: [
-              Icon(Icons.error_outline, color: const Color(0xFFE53935), size: 14.w),
-              SizedBox(width: 4.w),
-              Text(
-                'Phone number is required.',
-                style: AppTextStyles.publicSans_regular_14_center(color: const Color(0xFFE53935)),
-              ),
-            ],
-          ),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildPasswordField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: 52.h,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(
-              color: _hasPasswordError ? const Color(0xFFE53935) : AppColors.bordersColore,
-              width: _hasPasswordError ? 1.w : 0.5.w,
-            ),
-          ),
-          child: TextField(
-            controller: _passwordController,
-            obscureText: _obscurePassword,
-            onChanged: (_) => setState(() => _hasPasswordError = false),
-            style: AppTextStyles.publicSans_regular_16_center(color: AppColors.black),
-            decoration: InputDecoration(
-              hintText: 'Password',
-              hintStyle: AppTextStyles.publicSans_regular_16_center(color: AppColors.hintColore),
-              contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-              border: InputBorder.none,
-              isCollapsed: true,
-              suffixIcon: GestureDetector(
-                onTap: () => setState(() => _obscurePassword = !_obscurePassword),
-                child: Icon(
-                  _obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined,
-                  color: AppColors.primary300,
-                  size: 20.w,
-                ),
-              ),
-            ),
-          ),
-        ),
-        if (_hasPasswordError) ...[
-          SizedBox(height: 4.h),
-          Row(
-            children: [
-              Icon(Icons.error_outline, color: const Color(0xFFE53935), size: 14.w),
-              SizedBox(width: 4.w),
-              Text(
-                'Password is required.',
-                style: AppTextStyles.publicSans_regular_14_center(color: const Color(0xFFE53935)),
-              ),
-            ],
-          ),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildTermsRow() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: 20.w,
-              height: 20.h,
-              child: Checkbox(
-                value: _agreedToTerms,
-                onChanged: (val) => setState(() {
-                  _agreedToTerms = val ?? false;
-                  _hasTermsError = false;
-                }),
-                activeColor: AppColors.primary500,
-                side: BorderSide(
-                  color: _hasTermsError ? const Color(0xFFE53935) : AppColors.grey400,
-                ),
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.r)),
-              ),
-            ),
-            SizedBox(width: 10.w),
-            Expanded(
-              child: RichText(
-                text: TextSpan(
-                  style: AppTextStyles.publicSans_regular_14_center(color: AppColors.grey600),
-                  children: [
-                    const TextSpan(text: "By registering, I confirm that I accept ShowMe's "),
-                    TextSpan(
-                      text: 'Terms & Conditions',
-                      style: AppTextStyles.publicSans_regular_14_center(color: AppColors.primary500)
-                          .copyWith(decoration: TextDecoration.underline),
-                    ),
-                    const TextSpan(text: ', and '),
-                    TextSpan(
-                      text: 'Privacy Policy',
-                      style: AppTextStyles.publicSans_regular_14_center(color: AppColors.primary500)
-                          .copyWith(decoration: TextDecoration.underline),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        if (_hasTermsError) ...[
-          SizedBox(height: 4.h),
-          Row(
-            children: [
-              Icon(Icons.error_outline, color: const Color(0xFFE53935), size: 14.w),
-              SizedBox(width: 4.w),
-              Text(
-                'You must accept the terms to continue.',
-                style: AppTextStyles.publicSans_regular_14_center(color: const Color(0xFFE53935)),
-              ),
-            ],
-          ),
-        ],
-        SizedBox(height: 10.h,)
-      ],
-    );
-  }
-
-  Widget _buildSignInRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "Already have an account? ",
-          style: AppTextStyles.publicSans_regular_16_center(color: AppColors.primary300),
-        ),
-        GestureDetector(
-          onTap: () => Navigator.pop(context),
-          child: Text(
-            'Sign In',
-            style: AppTextStyles.publicSans_regular_16_center(color: AppColors.primary500),
-          ),
-        ),
-      ],
     );
   }
 }

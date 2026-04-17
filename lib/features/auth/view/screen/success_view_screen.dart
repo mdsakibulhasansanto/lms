@@ -59,7 +59,7 @@ class SuccessViewScreen extends ConsumerWidget {
                 onPressed: () async {
                   await ref.read(authProvider.notifier).confirmSession();
                   if (context.mounted) {
-                    context.goNamed(AppRouteName.browseCoursesScreen);
+                    context.goNamed(AppRouteName.dashboardScreen);
                   }
                 },
                 text: 'Go to Home',

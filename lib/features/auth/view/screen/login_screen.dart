@@ -3,14 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lms/core/router/app_route_name.dart';
 import 'package:lms/core/theme/app_colors.dart';
-
 import '../../../../core/utils/assets_urls.dart';
-import '../widget/app_auth_bottom_row.dart';
-import '../widget/app_auth_header.dart';
-import '../widget/app_auth_primary_button.dart';
-import '../widget/app_or_divider.dart';
-import '../widget/app_skip_button.dart';
-import '../widget/app_social_button.dart';
+import '../widgets/app_or_divider.dart';
+import '../widgets/app_skip_button.dart';
+import '../widgets/auth_auth_switch_row_widget.dart';
+import '../widgets/auth_primary_button_widget.dart';
+import '../widgets/auth_social_button_widget.dart';
+import '../widgets/auth_title_widget.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -34,60 +33,55 @@ class LoginScreen extends StatelessWidget {
                     color: AppColors.primary500,
                   ),
                   SizedBox(height: 24.h),
-                  const AppAuthHeader(
+                  const AuthTitleWidget(
                     title: 'Welcome Back!',
                     subtitle: 'Hello there, how would you like to continue',
                   ),
                   SizedBox(height: 40.h),
-                  AppSocialButton(
+                  AuthSocialButtonWidget(
                     onTap: () {},
-                    icon: Image.asset(AssetsUrls.google, width: 22.w, height: 22.w),
-                    label: 'Continue with Google',
+                    icon: Image.asset(
+                      AssetsUrls.google,
+                      width: 22.w,
+                      height: 22.w,
+                    ),
+                    text: 'Continue with Google',
                   ),
                   SizedBox(height: 12.h),
-                  AppSocialButton(
+                  AuthSocialButtonWidget(
                     onTap: () {},
-                    icon: Image.asset(AssetsUrls.apple, width: 22.w, height: 22.w),
-                    label: 'Continue with Apple',
+                    icon: Image.asset(
+                      AssetsUrls.apple,
+                      width: 22.w,
+                      height: 22.w,
+                    ),
+                    text: 'Continue with Apple',
                   ),
                   SizedBox(height: 24.h),
                   const AppOrDivider(),
                   SizedBox(height: 24.h),
-                  AppAuthPrimaryButton(
+                  AuthPrimaryButtonWidget(
                     onPressed: () {
                       context.pushNamed(AppRouteName.loginEmailScreen);
                     },
-                    label: 'Login with Email',
+                    text: 'Login with Email',
                   ),
                   const Spacer(),
-                  AppAuthBottomRow(
+                  AuthAuthSwitchRowWidget(
                     questionText: "Don't have an account? ",
                     actionText: 'Sign Up',
                     onTap: () {
-                     context.pushNamed(AppRouteName.signUpScreen);
+                      context.pushNamed(AppRouteName.signUpScreen);
                     },
                   ),
                   SizedBox(height: 92.h),
                 ],
               ),
             ),
-            Positioned(
-              top: 12.h,
-              right: 16.w,
-              child:  AppSkipButton(),
-            ),
+            Positioned(top: 12.h, right: 16.w, child: AppSkipButton()),
           ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
