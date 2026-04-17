@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lms/core/router/app_route_name.dart';
 import 'package:lms/core/theme/app_colors.dart';
 import 'package:lms/core/theme/app_text_styles.dart';
 import 'package:lms/core/widgets/app_primary_button.dart';
 import 'package:lms/features/auth/view/screen/sign_up_screen.dart';
+import 'package:lms/features/auth/viewmodel/auth_provider/auth_provider.dart';
 
 import '../../../../core/utils/assets_urls.dart';
 
-class LoginEmailScreen extends StatefulWidget {
+class LoginEmailScreen extends ConsumerStatefulWidget {
   const LoginEmailScreen({super.key});
 
   @override
-  State<LoginEmailScreen> createState() => _LoginEmailScreenState();
+  ConsumerState<LoginEmailScreen> createState() => _LoginEmailScreenState();
 }
 
-class _LoginEmailScreenState extends State<LoginEmailScreen> {
+class _LoginEmailScreenState extends ConsumerState<LoginEmailScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true;
@@ -28,19 +32,34 @@ class _LoginEmailScreenState extends State<LoginEmailScreen> {
     super.dispose();
   }
 
-  void _onLoginPressed() {
+  void _onLoginPressed() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text;
 
     setState(() {
       _hasEmailError = email.isEmpty;
-      _hasPasswordError = email.isNotEmpty && password.isEmpty;
+      _hasPasswordError = false;
     });
 
     if (email.isEmpty) return;
-
     if (password.isEmpty) {
-      _showNoAccountDialog();
+      setState(() => _hasPasswordError = true);
+      return;
+    }
+
+    final success = await ref.read(authProvider.notifier).login(email: email, password: password);
+
+    if (!mounted) return;
+
+    if (success) {
+      context.goNamed(AppRouteName.browseCoursesScreen);
+    } else {
+      final error = ref.read(authProvider).error ?? '';
+      if (error.contains('user_not_found')) {
+        _showNoAccountDialog();
+      } else if (error.contains('wrong_password')) {
+        setState(() => _hasPasswordError = true);
+      }
     }
   }
 

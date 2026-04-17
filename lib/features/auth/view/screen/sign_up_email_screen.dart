@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lms/core/router/app_route_name.dart';
@@ -7,17 +8,18 @@ import 'package:lms/core/router/app_route_name.dart';
 import 'package:lms/core/theme/app_colors.dart';
 import 'package:lms/core/theme/app_text_styles.dart';
 import 'package:lms/core/widgets/app_primary_button.dart';
+import 'package:lms/features/auth/viewmodel/auth_provider/auth_provider.dart';
 
 import '../widget/country_code_picker.dart';
 
-class SignUpEmailScreen extends StatefulWidget {
+class SignUpEmailScreen extends ConsumerStatefulWidget {
   const SignUpEmailScreen({super.key});
 
   @override
-  State<SignUpEmailScreen> createState() => _SignUpEmailScreenState();
+  ConsumerState<SignUpEmailScreen> createState() => _SignUpEmailScreenState();
 }
 
-class _SignUpEmailScreenState extends State<SignUpEmailScreen> {
+class _SignUpEmailScreenState extends ConsumerState<SignUpEmailScreen> {
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -41,7 +43,7 @@ class _SignUpEmailScreenState extends State<SignUpEmailScreen> {
     super.dispose();
   }
 
-  void _onSignUpPressed() {
+  void _onSignUpPressed() async {
     setState(() {
       _hasFullNameError = _fullNameController.text.trim().isEmpty;
       _hasEmailError = _emailController.text.trim().isEmpty;
@@ -52,7 +54,23 @@ class _SignUpEmailScreenState extends State<SignUpEmailScreen> {
 
     if (_hasFullNameError || _hasEmailError || _hasPhoneError || _hasPasswordError || _hasTermsError) return;
 
-    context.pushNamed(AppRouteName.verifyOtpScreen);
+    final success = await ref.read(authProvider.notifier).register(
+      name: _fullNameController.text.trim(),
+      email: _emailController.text.trim(),
+      phone: _phoneController.text.trim(),
+      password: _passwordController.text,
+    );
+
+    if (!mounted) return;
+
+    if (success) {
+      context.pushNamed(AppRouteName.verifyOtpScreen);
+    } else {
+      final error = ref.read(authProvider).error ?? '';
+      if (error.contains('email_already_exists')) {
+        setState(() => _hasEmailError = true);
+      }
+    }
   }
 
   @override
