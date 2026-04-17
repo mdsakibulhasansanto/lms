@@ -12,7 +12,8 @@ import 'package:lms/features/dashboard/view/dashboard_screen.dart';
 import 'package:lms/features/splash_onboarding/view/first_onboarding_screen.dart';
 import 'package:lms/features/splash_onboarding/view/splash_screen.dart';
 
-import '../../features/choose_your_role/view/choose_your_role_screen.dart';
+import '../../features/choose_your_role/view/screen/choose_your_role_screen.dart';
+
 
 class AppRouter {
   static final GoRouter router = GoRouter(

@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:lms/core/router/app_route_name.dart';
 import 'package:lms/core/utils/assets_urls.dart';
 import 'package:lms/core/widgets/app_primary_button.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_text_styles.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_text_styles.dart';
 import '../widget/role_tile.dart';
 
 class ChooseYourRoleScreen extends StatefulWidget {
