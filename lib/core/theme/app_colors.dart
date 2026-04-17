@@ -8,6 +8,7 @@ class AppColors {
   // Default Text Color white and black
   static const white = Color(0xFFFFFFFF);
   static const black = Color(0xFF000000);
+  static const appBackground = Color(0xFFF9FAFB);
 
   // Grey
   static const Color grey100 = Color(0xFFF9FAFB);
