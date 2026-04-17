@@ -7,7 +7,8 @@ import 'package:lms/features/auth/view/screen/sign_up_email_screen.dart';
 import 'package:lms/features/auth/view/screen/sign_up_screen.dart';
 import 'package:lms/features/auth/view/screen/success_view_screen.dart';
 import 'package:lms/features/auth/view/screen/verify_otp_screen.dart';
-import 'package:lms/features/courses/view/screen/browse_courses_screen.dart';
+import 'package:lms/features/browse_courses/view/screen/home_screen.dart';
+import 'package:lms/features/dashboard/view/dashboard_screen.dart';
 import 'package:lms/features/splash_onboarding/view/first_onboarding_screen.dart';
 import 'package:lms/features/splash_onboarding/view/splash_screen.dart';
 
@@ -68,11 +69,16 @@ class AppRouter {
         name: AppRouteName.successViewScreen,
         builder: (context, state) => SuccessViewScreen(),
       ),
+      GoRoute(
+        path: AppRoutePath.dashboardScreen,
+        name: AppRouteName.dashboardScreen,
+        builder: (context, state) => DashboardScreen(),
+      ),
 
       GoRoute(
         path: AppRoutePath.browseCoursesScreen,
         name: AppRouteName.browseCoursesScreen,
-        builder: (context, state) => BrowseCoursesScreen(),
+        builder: (context, state) => HomeScreen(),
       ),
 
 

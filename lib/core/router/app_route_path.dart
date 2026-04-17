@@ -20,6 +20,7 @@ class AppRoutePath {
   static const choiceYourRoleScreen = '/choice-your-role-screen';
 
   // =========================== Dashboard ============================
-  static const browseCoursesScreen = '/browse-courses-screen';
+  static const dashboardScreen = '/dashboard-screen';
+  static const browseCoursesScreen = '/browse-browse_courses-screen';
 
 }

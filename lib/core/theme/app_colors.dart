@@ -20,6 +20,7 @@ class AppColors {
   static const Color grey700 = Color(0xFF454F5B);
   static const Color grey800 = Color(0xFF212B36);
   static const Color grey900 = Color(0xFF161C24);
+  static const Color grey1000 = Color(0xFF5A5C5F);
 
   // Primary / Linear Gradient
   static const Color primaryStart = Color(0xFF153885);
@@ -30,6 +31,7 @@ class AppColors {
   static const Color primaryEnd = Color(0xFF153885);
   static const Color bordersColore = Color(0xFFE2E5F0);
   static const Color hintColore = Color(0xFFA0A4B8);
+  static const Color indigo500 = Color(0xFF6366F1);
 
   static const Color secondary500 = Color(0xFF01A375);
 

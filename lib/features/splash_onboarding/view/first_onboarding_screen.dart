@@ -21,7 +21,7 @@ class _FirstOnboardingScreenState extends State<FirstOnboardingScreen> {
     {
       'image': AssetsUrls.elearning_onboarding_a,
       'title': 'Discover Top Courses',
-      'subtitle': 'Explore thousands of courses from\nexpert instructors',
+      'subtitle': 'Explore thousands of browse_courses from\nexpert instructors',
     },
     {
       'image': AssetsUrls.elearning_onboarding_b,
@@ -32,7 +32,7 @@ class _FirstOnboardingScreenState extends State<FirstOnboardingScreen> {
       'image': AssetsUrls.elearning_onboarding_a,
       'title': 'Teach & Share Your Knowledge',
       'subtitle':
-      'Create courses, reach students, and\nearn from your expertise',
+      'Create browse_courses, reach students, and\nearn from your expertise',
     },
   ];
 

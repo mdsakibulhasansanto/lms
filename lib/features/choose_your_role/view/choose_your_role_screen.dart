@@ -62,7 +62,7 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
               RoleTile(
                 assetIcon: AssetsUrls.book,
                 title: 'Student',
-                subtitle: 'Browse courses, learn new skills',
+                subtitle: 'Browse browse_courses, learn new skills',
                 isSelected: _selectedRole == 'student',
                 onTap: () => setState(() => _selectedRole = 'student'),
               ),
@@ -70,7 +70,7 @@ class _ChooseYourRoleScreenState extends State<ChooseYourRoleScreen> {
               RoleTile(
                 assetIcon: AssetsUrls.teacher,
                 title: 'Instructor',
-                subtitle: 'Create courses, teach students, and earn',
+                subtitle: 'Create browse_courses, teach students, and earn',
                 isSelected: _selectedRole == 'instructor',
                 onTap: () => setState(() => _selectedRole = 'instructor'),
               ),

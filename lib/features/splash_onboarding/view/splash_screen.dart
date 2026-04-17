@@ -31,7 +31,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     if (!mounted) return;
     final status = ref.read(authProvider).status;
     if (status == AuthStatus.authenticated) {
-      context.goNamed(AppRouteName.browseCoursesScreen);
+      context.goNamed(AppRouteName.dashboardScreen);
     } else {
       context.goNamed(AppRouteName.firstOnboardingScreen);
     }
