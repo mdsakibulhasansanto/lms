@@ -31,6 +31,8 @@ class AppColors {
   static const Color bordersColore = Color(0xFFE2E5F0);
   static const Color hintColore = Color(0xFFA0A4B8);
 
+  static const Color secondary500 = Color(0xFF01A375);
+
   static const LinearGradient primaryLinear = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

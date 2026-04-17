@@ -47,6 +47,15 @@ class AppTextStyles {
     color: color ?? defaultColor,
   );
 
+  // ------------------- Public Sans 18 Medium -------------------
+  static TextStyle publicSans_medium_18({Color? color}) => TextStyle(
+    fontFamily: GoogleFonts.publicSans().fontFamily,
+    fontWeight: FontWeight.w500,
+    fontSize: 18.sp,
+    height: 1,
+    letterSpacing: 0,
+    color: color ?? defaultColor,
+  );
   // ------------------- Public Sans 14 Regular -------------------
   static TextStyle publicSans_regular_14_center({Color? color}) => TextStyle(
     fontFamily: GoogleFonts.publicSans().fontFamily,

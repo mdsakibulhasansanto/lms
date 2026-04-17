@@ -13,12 +13,13 @@ class AppRoutePath {
   static const loginEmailScreen = '/login-email-screen';
   static  const signUpScreen = '/sign-up-screen';
   static const signUpEmailScreen = '/sign-up-email-screen';
-  static const register = '/register';
-  static const emailPage = '/email-page';
-  static const otpPage = '/otp-page';
-  static const setNewPassword = '/set-new-password';
+  static const verifyOtpScreen = '/verify-otp-screen';
+  static const successViewScreen = '/success-view-screen';
 
   //========================== Choice your role ============================
   static const choiceYourRoleScreen = '/choice-your-role-screen';
+
+  // =========================== Dashboard ============================
+  static const browseCoursesScreen = '/browse-courses-screen';
 
 }

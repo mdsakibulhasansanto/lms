@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lms/core/router/app_route_name.dart';
 
 import 'package:lms/core/theme/app_colors.dart';
 import 'package:lms/core/theme/app_text_styles.dart';
@@ -49,6 +51,8 @@ class _SignUpEmailScreenState extends State<SignUpEmailScreen> {
     });
 
     if (_hasFullNameError || _hasEmailError || _hasPhoneError || _hasPasswordError || _hasTermsError) return;
+
+    context.pushNamed(AppRouteName.verifyOtpScreen);
   }
 
   @override

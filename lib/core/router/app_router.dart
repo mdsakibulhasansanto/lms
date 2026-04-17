@@ -5,6 +5,9 @@ import 'package:lms/features/auth/view/screen/login_email_screen.dart';
 import 'package:lms/features/auth/view/screen/login_screen.dart';
 import 'package:lms/features/auth/view/screen/sign_up_email_screen.dart';
 import 'package:lms/features/auth/view/screen/sign_up_screen.dart';
+import 'package:lms/features/auth/view/screen/success_view_screen.dart';
+import 'package:lms/features/auth/view/screen/verify_otp_screen.dart';
+import 'package:lms/features/courses/view/screen/browse_courses_screen.dart';
 import 'package:lms/features/splash_onboarding/view/first_onboarding_screen.dart';
 import 'package:lms/features/splash_onboarding/view/splash_screen.dart';
 
@@ -53,6 +56,23 @@ class AppRouter {
         path: AppRoutePath.signUpEmailScreen,
         name: AppRouteName.signUpEmailScreen,
         builder: (context, state) => SignUpEmailScreen(),
+      ),
+      GoRoute(
+        path: AppRoutePath.verifyOtpScreen,
+        name: AppRouteName.verifyOtpScreen,
+        builder: (context, state) => VerifyOtpScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutePath.successViewScreen,
+        name: AppRouteName.successViewScreen,
+        builder: (context, state) => SuccessViewScreen(),
+      ),
+
+      GoRoute(
+        path: AppRoutePath.browseCoursesScreen,
+        name: AppRouteName.browseCoursesScreen,
+        builder: (context, state) => BrowseCoursesScreen(),
       ),
 
 
