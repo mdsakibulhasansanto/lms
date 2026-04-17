@@ -163,4 +163,3 @@ Notes based on current code:
 ## Author / Contact Information
 - **Author:** Md Sakibul Hasan Santo
 - **Email:** mdsakibulhasanto7@gmail.com
-- **LinkedIn/GitHub:** _Add your profile links_
