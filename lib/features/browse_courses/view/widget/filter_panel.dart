@@ -15,7 +15,7 @@ class FilterPanel extends StatefulWidget {
 class _FilterPanelState extends State<FilterPanel> {
   final Set<String> _selectedTopics = {'Web Design'};
   final Set<String> _selectedMore = {'Popular', 'New'};
-  RangeValues _priceRange = const RangeValues(0, 150);
+  RangeValues _priceRange = const RangeValues(0, 75);
 
   bool _topicExpanded = true;
   bool _moreExpanded = true;
@@ -112,7 +112,7 @@ class _FilterPanelState extends State<FilterPanel> {
         Text(
           'Filter',
           style: AppTextStyles.publicSans_semiBold_16_center(
-              color: AppColors.grey800),
+              color: AppColors.queryColors),
         ),
         GestureDetector(
           onTap: () => Navigator.pop(context),
@@ -123,7 +123,7 @@ class _FilterPanelState extends State<FilterPanel> {
               color: AppColors.grey200,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.close, size: 16.sp, color: AppColors.grey700),
+            child: Icon(Icons.close, size: 16.sp, color: AppColors.queryColors),
           ),
         ),
       ],
@@ -196,7 +196,7 @@ class _FilterPanelState extends State<FilterPanel> {
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
             decoration: BoxDecoration(
               color: isSelected ? AppColors.primary500 : AppColors.grey100,
-              borderRadius: BorderRadius.circular(20.r),
+              borderRadius: BorderRadius.circular(6.r),
               border: Border.all(
                 color: isSelected ? AppColors.primary500 : AppColors.grey300,
               ),

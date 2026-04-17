@@ -31,7 +31,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.appBackground,
       body: IndexedStack(
         index: _selectedIndex,
         children: _screens,
@@ -50,16 +49,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             boxShadow: [
               BoxShadow(
-                color: AppColors.grey300.withOpacity(0.4),
-                blurRadius: 12,
-                offset: Offset(0, -4),
+                color: Colors.black.withOpacity(0.08),
+                blurRadius: 20,
+                spreadRadius: 0,
+                offset: Offset(0, -6),
               ),
             ],
           ),
           child: NavigationBarTheme(
             data: NavigationBarThemeData(
-              indicatorColor: Colors.transparent,
-              backgroundColor: Colors.transparent,
+              indicatorColor: AppColors.primary500,
+              backgroundColor: AppColors.primary500,
               labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
                 if (states.contains(WidgetState.selected)) {
                   return AppTextStyles.inter_regular_12(color: AppColors.primary500);
@@ -68,7 +68,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               }),
               iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((states) {
                 if (states.contains(WidgetState.selected)) {
-                  return IconThemeData(color: AppColors.primary500);
+                  return IconThemeData(color: AppColors.white);
                 }
                 return IconThemeData(color: AppColors.grey500);
               }),
@@ -83,43 +83,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
               destinations: [
                 NavigationDestination(
-                  icon: Icon(
-                    Icons.home_rounded,
-                    color: _selectedIndex == 0 ? AppColors.primary500 : AppColors.grey500,
-                    size: 24.sp,
-                  ),
+                  icon: Icon(Icons.home_rounded, size: 24.sp),
                   label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: Icon(
-                    Icons.play_circle_outline_rounded,
-                    color: _selectedIndex == 1 ? AppColors.primary500 : AppColors.grey500,
-                    size: 24.sp,
-                  ),
+                  icon: Icon(Icons.play_circle_outline_rounded, size: 24.sp),
                   label: 'Courses',
                 ),
                 NavigationDestination(
-                  icon: Icon(
-                    Icons.person_outline_rounded,
-                    color: _selectedIndex == 2 ? AppColors.primary500 : AppColors.grey500,
-                    size: 24.sp,
-                  ),
+                  icon: Icon(Icons.person_outline_rounded, size: 24.sp),
                   label: 'Instructor',
                 ),
                 NavigationDestination(
-                  icon: Icon(
-                    Icons.bar_chart_rounded,
-                    color: _selectedIndex == 3 ? AppColors.primary500 : AppColors.grey500,
-                    size: 24.sp,
-                  ),
+                  icon: Icon(Icons.bar_chart_rounded, size: 24.sp),
                   label: 'Activities',
                 ),
                 NavigationDestination(
-                  icon: Icon(
-                    Icons.settings_outlined,
-                    color: _selectedIndex == 4 ? AppColors.primary500 : AppColors.grey500,
-                    size: 24.sp,
-                  ),
+                  icon: Icon(Icons.settings_outlined, size: 24.sp),
                   label: 'Settings',
                 ),
               ],

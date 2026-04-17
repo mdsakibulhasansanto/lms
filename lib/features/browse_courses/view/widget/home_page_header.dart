@@ -56,12 +56,12 @@ class UserHomePageHeader extends StatelessWidget implements PreferredSizeWidget 
                 children: [
                   Text(
                     'Hello, ${userName ?? 'Hello,Santo'}',
-                    style: AppTextStyles.publicSans_semiBold_16_center(
-                      color: AppColors.grey800,
+                    style: AppTextStyles.publicSans_regular_14_center(
+                      color: AppColors.textBody,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 2.h),
+                  SizedBox(height: 4.h),
                   Text(
                     'Browse or search your courses.',
                     style: AppTextStyles.inter_regular_12(

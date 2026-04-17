@@ -32,7 +32,7 @@ class RoleTile extends StatelessWidget {
           color: isSelected ? AppColors.primary50 : AppColors.white,
           border: Border.all(
             color: isSelected ? AppColors.primary500 : AppColors.grey300,
-            width: 1.5,
+            width: 0.5,
           ),
           borderRadius: BorderRadius.circular(10.r),
         ),

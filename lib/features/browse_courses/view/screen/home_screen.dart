@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/features/auth/viewmodel/auth_provider/auth_provider.dart';
 import 'package:lms/features/browse_courses/view/widget/build_banner_card.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -91,14 +93,14 @@ final List<String> _tabs = [
   'Pyt',
 ];
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _selectedTopRatedTab = 0;
   int _selectedFreeTab = 0;
   final TextEditingController _searchController = TextEditingController();
@@ -180,11 +182,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userName = ref.watch(authProvider).user?.name;
+
     return Scaffold(
       backgroundColor: AppColors.appBackground,
       appBar: UserHomePageHeader(
         imageUrl: 'https://randomuser.me/api/portraits/women/32.jpg',
-        userName: 'Fahmida',
+        userName: userName,
         cartCount: 2,
         onCartTap: () {},
         onProfileTap: () {},
@@ -312,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: isSelected
                     ? AppColors.primary500
                     : AppColors.white,
-                borderRadius: BorderRadius.circular(20.r),
+                borderRadius: BorderRadius.circular(8.r),
                 border: Border.all(
                   color: isSelected
                       ? AppColors.primary500

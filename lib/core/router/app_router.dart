@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lms/core/router/app_route_name.dart';
 import 'package:lms/core/router/app_route_path.dart';
@@ -11,9 +12,7 @@ import 'package:lms/features/browse_courses/view/screen/home_screen.dart';
 import 'package:lms/features/dashboard/view/dashboard_screen.dart';
 import 'package:lms/features/splash_onboarding/view/onboarding_screen.dart';
 import 'package:lms/features/splash_onboarding/view/splash_screen.dart';
-
 import '../../features/choose_your_role/view/screen/choose_your_role_screen.dart';
-
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -27,62 +26,155 @@ class AppRouter {
       GoRoute(
         path: AppRoutePath.firstOnboardingScreen,
         name: AppRouteName.firstOnboardingScreen,
-        builder: (context, state) => const FirstOnboardingScreen(),
+        pageBuilder: (context, state) => slidePage(
+          context: context,
+          state: state,
+          child: const FirstOnboardingScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutePath.choiceYourRoleScreen,
         name: AppRouteName.choiceYourRoleScreen,
-        builder: (context, state) => ChooseYourRoleScreen(),
-
+        pageBuilder: (context, state) => slidePage(
+          context: context,
+          state: state,
+          child: ChooseYourRoleScreen(),
+        ),
       ),
-
-
-      //=========================== Authentication============================
-
       GoRoute(
         path: AppRoutePath.loginScreen,
         name: AppRouteName.loginScreen,
-        builder: (context, state) => LoginScreen(),
+        pageBuilder: (context, state) =>
+            slidePage(context: context, state: state, child: LoginScreen()),
       ),
       GoRoute(
         path: AppRoutePath.loginEmailScreen,
         name: AppRouteName.loginEmailScreen,
-        builder: (context, state) => LoginEmailScreen(),
+        pageBuilder: (context, state) => slidePage(
+          context: context,
+          state: state,
+          child: LoginEmailScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutePath.signUpScreen,
         name: AppRouteName.signUpScreen,
-        builder: (context, state) => SignUpScreen(),
+        pageBuilder: (context, state) =>
+            slidePage(context: context, state: state, child: SignUpScreen()),
       ),
       GoRoute(
         path: AppRoutePath.signUpEmailScreen,
         name: AppRouteName.signUpEmailScreen,
-        builder: (context, state) => SignUpEmailScreen(),
+        pageBuilder: (context, state) => slidePage(
+          context: context,
+          state: state,
+          child: SignUpEmailScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutePath.verifyOtpScreen,
         name: AppRouteName.verifyOtpScreen,
-        builder: (context, state) => VerifyOtpScreen(),
+        pageBuilder: (context, state) =>
+            slidePage(context: context, state: state, child: VerifyOtpScreen()),
       ),
-
       GoRoute(
         path: AppRoutePath.successViewScreen,
         name: AppRouteName.successViewScreen,
-        builder: (context, state) => SuccessViewScreen(),
+        pageBuilder: (context, state) => bottomSlidePage(
+          context: context,
+          state: state,
+          child: SuccessViewScreen(),
+        ),
       ),
       GoRoute(
         path: AppRoutePath.dashboardScreen,
         name: AppRouteName.dashboardScreen,
-        builder: (context, state) => DashboardScreen(),
+        pageBuilder: (context, state) => bottomSlidePage(
+          context: context,
+          state: state,
+          child: DashboardScreen(),
+        ),
       ),
-
       GoRoute(
         path: AppRoutePath.browseCoursesScreen,
         name: AppRouteName.browseCoursesScreen,
-        builder: (context, state) => HomeScreen(),
+        pageBuilder: (context, state) =>
+            slidePage(context: context, state: state, child: HomeScreen()),
       ),
-
-
     ],
   );
+
+  static CustomTransitionPage<void> slidePage({
+    required BuildContext context,
+    required GoRouterState state,
+    required Widget child,
+  }) {
+    return CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: child,
+      transitionDuration: const Duration(milliseconds: 280),
+      reverseTransitionDuration: const Duration(milliseconds: 280),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOutCubic;
+
+        final tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
+        final offsetAnimation = animation.drive(tween);
+
+        final secondaryTween = Tween(
+          begin: Offset.zero,
+          end: const Offset(-0.3, 0.0),
+        ).chain(CurveTween(curve: curve));
+        final secondaryOffsetAnimation = secondaryAnimation.drive(
+          secondaryTween,
+        );
+
+        return SlideTransition(
+          position: secondaryOffsetAnimation,
+          child: SlideTransition(position: offsetAnimation, child: child),
+        );
+      },
+    );
+  }
+
+  static CustomTransitionPage<void> bottomSlidePage({
+    required BuildContext context,
+    required GoRouterState state,
+    required Widget child,
+  }) {
+    return CustomTransitionPage<void>(
+      key: state.pageKey,
+      child: child,
+      transitionDuration: const Duration(milliseconds: 300),
+      reverseTransitionDuration: const Duration(milliseconds: 280),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOutCubic;
+
+        final tween = Tween(
+          begin: begin,
+          end: end,
+        ).chain(CurveTween(curve: curve));
+        final offsetAnimation = animation.drive(tween);
+
+        final secondaryTween = Tween(
+          begin: Offset.zero,
+          end: const Offset(0.0, -0.1),
+        ).chain(CurveTween(curve: curve));
+        final secondaryOffsetAnimation = secondaryAnimation.drive(
+          secondaryTween,
+        );
+
+        return SlideTransition(
+          position: secondaryOffsetAnimation,
+          child: SlideTransition(position: offsetAnimation, child: child),
+        );
+      },
+    );
+  }
 }
