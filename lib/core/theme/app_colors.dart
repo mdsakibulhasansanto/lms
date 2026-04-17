@@ -24,8 +24,11 @@ class AppColors {
   static const Color primaryStart = Color(0xFF153885);
   static const Color primary50 = Color(0xFFE0F0FF);
   static const Color primary100 = Color(0xFFD9ECFF);
+  static const Color primary300 = Color(0xFF5E6470);
   static const Color primary500 = Color(0xFF2563EB);
   static const Color primaryEnd = Color(0xFF153885);
+  static const Color bordersColore = Color(0xFFE2E5F0);
+  static const Color hintColore = Color(0xFFA0A4B8);
 
   static const LinearGradient primaryLinear = LinearGradient(
     begin: Alignment.topLeft,

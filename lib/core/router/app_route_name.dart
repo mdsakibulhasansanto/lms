@@ -6,8 +6,9 @@ class AppRouteName {
   static const firstOnboardingScreen = 'first-onboarding-screen';
 
   //=========================== Authentication============================
-  static const login = 'login';
-  static const register = 'register';
+  static const loginScreen = 'login-screen';
+  static const loginEmailScreen = 'login-email-screen';
+  static const signUpScreen = 'sign-up-screen';
   static const emailPage = 'email-page';
   static const otpPage = 'otp-page';
   static const setNewPassword = 'set-new-password';

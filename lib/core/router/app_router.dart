@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:lms/core/router/app_route_name.dart';
 import 'package:lms/core/router/app_route_path.dart';
+import 'package:lms/features/auth/view/screen/login_email_screen.dart';
 import 'package:lms/features/splash_onboarding/view/first_onboarding_screen.dart';
 import 'package:lms/features/splash_onboarding/view/splash_screen.dart';
 
@@ -26,6 +27,17 @@ class AppRouter {
         builder: (context, state) => ChooseYourRoleScreen(),
 
       ),
+
+
+      //=========================== Authentication============================
+
+      GoRoute(
+        path: AppRoutePath.loginEmailScreen,
+        name: AppRouteName.loginEmailScreen,
+        builder: (context, state) => LoginEmailScreen(),
+
+      ),
+
 
     ],
   );

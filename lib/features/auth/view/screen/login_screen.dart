@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lms/core/router/app_route_name.dart';
+import 'package:lms/core/theme/app_colors.dart';
+import 'package:lms/core/theme/app_text_styles.dart';
+import 'package:lms/core/widgets/app_primary_button.dart';
+import 'package:lms/features/auth/view/screen/sign_up_screen.dart';
 
 import '../../../../core/utils/assets_urls.dart';
 
@@ -8,6 +14,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6F8),
       body: SafeArea(
@@ -18,7 +25,12 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 60.h),
-                  _buildLogo(),
+                  Image.asset(
+                      AssetsUrls.elearning,
+                      width: 80.w,
+                      height: 80.h,
+                    color: AppColors.primary500,
+                  ),
                   SizedBox(height: 24.h),
                   _buildTitle(),
                   SizedBox(height: 40.h),
@@ -31,7 +43,7 @@ class LoginScreen extends StatelessWidget {
                   _buildEmailButton(context),
                   const Spacer(),
                   _buildSignUpRow(context),
-                  SizedBox(height: 32.h),
+                  SizedBox(height: 92.h),
                 ],
               ),
             ),
@@ -46,48 +58,19 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLogo() {
-    return Container(
-      width: 72.w,
-      height: 72.w,
-      decoration: const BoxDecoration(
-        color: Color(0xFF2563EB),
-        shape: BoxShape.circle,
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Positioned(
-            top: 10.h,
-            child: Icon(Icons.school, color: Colors.white, size: 28.sp),
-          ),
-          Center(
-            child: Icon(Icons.play_circle_fill, color: Colors.white, size: 36.sp),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildTitle() {
     return Column(
       children: [
         Text(
           'Welcome Back!',
-          style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 24.sp,
-            color: const Color(0xFF212B36),
-          ),
+          style: AppTextStyles.publicSans_semiBold_24_center(color: AppColors.black),
         ),
         SizedBox(height: 8.h),
         Text(
           'Hello there, how would you like to continue',
-          style: TextStyle(
-            fontWeight: FontWeight.w400,
-            fontSize: 14.sp,
-            color: const Color(0xFF637381),
-          ),
+          style: AppTextStyles.publicSans_regular_14_center(color: AppColors.primary300),
           textAlign: TextAlign.center,
         ),
       ],
@@ -123,7 +106,7 @@ class LoginScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(color: const Color(0xFFDFE3E8), width: 1),
+          border: Border.all(color: AppColors.bordersColore, width: 0.5.w),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -132,11 +115,7 @@ class LoginScreen extends StatelessWidget {
             SizedBox(width: 10.w),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 15.sp,
-                fontWeight: FontWeight.w500,
-                color: const Color(0xFF212B36),
-              ),
+              style: AppTextStyles.publicSans_regular_16_center(color: AppColors.primary300),
             ),
           ],
         ),
@@ -152,10 +131,7 @@ class LoginScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Text(
             'Or',
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: const Color(0xFF919EAB),
-            ),
+            style: AppTextStyles.publicSans_medium_16(color: const Color(0xFF777777)),
           ),
         ),
         Expanded(child: Divider(color: const Color(0xFFDFE3E8), thickness: 1)),
@@ -167,24 +143,13 @@ class LoginScreen extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       height: 52.h,
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF2563EB),
-          foregroundColor: Colors.white,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.r),
-          ),
-        ),
-        child: Text(
-          'Log In With Email',
-          style: TextStyle(
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-          ),
-        ),
+      child: PrimaryButton(
+          onPressed: (){
+            context.pushNamed(AppRouteName.loginEmailScreen);
+          },
+          text: 'Login with Email',
+          backgroundColor: AppColors.primary500,
+        radius: 8.r,
       ),
     );
   }
@@ -192,25 +157,27 @@ class LoginScreen extends StatelessWidget {
   Widget _buildSkipButton(BuildContext context) {
     return GestureDetector(
       onTap: () {},
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(20.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.06),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
+      child: Padding(
+        padding:  EdgeInsets.only(top: 4.h,right: 16.w,bottom: 4.h,left: 16.w),
+        child: Container(
+          height: 32.h,
+          width: 66.w,
+          decoration: BoxDecoration(
+            color: AppColors.primary100,
+            borderRadius: BorderRadius.circular(48.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Center(
+            child: Text(
+              'Skip',
+              style: AppTextStyles.publicSans_regular_16_center(color: AppColors.primary500),
             ),
-          ],
-        ),
-        child: Text(
-          'Skip',
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w500,
-            color: const Color(0xFF2563EB),
           ),
         ),
       ),
@@ -223,10 +190,7 @@ class LoginScreen extends StatelessWidget {
       children: [
         Text(
           "Don't have an account? ",
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: const Color(0xFF637381),
-          ),
+          style: AppTextStyles.publicSans_regular_16_center(color: AppColors.primary300),
         ),
         GestureDetector(
           onTap: () {
@@ -237,11 +201,7 @@ class LoginScreen extends StatelessWidget {
           },
           child: Text(
             'Sign Up',
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: const Color(0xFF2563EB),
-            ),
+            style: AppTextStyles.publicSans_regular_16_center(color: AppColors.primary500),
           ),
         ),
       ],
@@ -249,20 +209,3 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
-
-  @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
-}
-
-class _SignUpScreenState extends State<SignUpScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Sign Up Screen'),
-      ),
-    );
-  }
-}

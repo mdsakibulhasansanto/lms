@@ -9,7 +9,8 @@ class AppRoutePath {
   static const firstOnboardingScreen = '/first-onboarding-screen';
 
   //=========================== Authentication============================
-  static const login = '/login';
+  static const loginScreen = '/login-screen';
+  static const loginEmailScreen = '/login-email-screen';
   static const register = '/register';
   static const emailPage = '/email-page';
   static const otpPage = '/otp-page';
