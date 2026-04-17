@@ -32,7 +32,7 @@ class _FirstOnboardingScreenState extends State<FirstOnboardingScreen> {
       'image': AssetsUrls.elearning_onboarding_a,
       'title': 'Teach & Share Your Knowledge',
       'subtitle':
-      'Create browse_courses, reach students, and\nearn from your expertise',
+      'Create browse_courses, reach students, and earn from your expertise',
     },
   ];
 
@@ -101,7 +101,7 @@ class _FirstOnboardingScreenState extends State<FirstOnboardingScreen> {
                         SizedBox(height: 32.h),
                         Text(
                           _slides[index]['title']!,
-                          style: AppTextStyles.publicSans_semiBold_24_center(
+                          style: AppTextStyles.publicSans_medium_24_center(
                             color: AppColors.primary500,
                           ),
                           textAlign: TextAlign.center,
@@ -113,6 +113,7 @@ class _FirstOnboardingScreenState extends State<FirstOnboardingScreen> {
                             color: AppColors.grey500,
                           ),
                           textAlign: TextAlign.center,
+                          maxLines: 2,
                         ),
                       ],
                     ),
@@ -123,51 +124,68 @@ class _FirstOnboardingScreenState extends State<FirstOnboardingScreen> {
             SizedBox(height: 40.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  Row(
-                    children: List.generate(_slides.length, (index) {
-                      return Row(
-                        children: [
-                          AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            width: _currentPage == index ? 24.w : 8.w,
-                            height: 8.h,
-                            decoration: BoxDecoration(
-                              color: _currentPage == index
-                                  ? AppColors.primary500
-                                  : AppColors.grey300,
-                              borderRadius: BorderRadius.circular(4.r),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(_slides.length, (index) {
+                        return Row(
+                          children: [
+                            AnimatedContainer(
+                              duration: const Duration(milliseconds: 300),
+                              width: _currentPage == index ? 24.w : 8.w,
+                              height: 8.h,
+                              decoration: BoxDecoration(
+                                color: _currentPage == index
+                                    ? AppColors.primary500
+                                    : AppColors.grey300,
+                                borderRadius: BorderRadius.circular(4.r),
+                              ),
                             ),
-                          ),
-                          if (index != _slides.length - 1) SizedBox(width: 6.w),
-                        ],
-                      );
-                    }),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      if (_currentPage < _slides.length - 1) {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
+                            if (index != _slides.length - 1) SizedBox(width: 6.w),
+                          ],
                         );
-                      } else {
-                        context.pushNamed(AppRouteName.choiceYourRoleScreen);
-                      }
-                    },
-                    child: Container(
-                      width: 42.w,
-                      height: 42.w,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary500,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: AppColors.white,
-                        size: 24.sp,
+                      }),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (_currentPage < _slides.length - 1) {
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        } else {
+                          context.pushNamed(AppRouteName.choiceYourRoleScreen);
+                        }
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(5.w),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColors.primary500,
+                            width: 1,
+                          ),
+                        ),
+                        child: Container(
+                          width: 42.w,
+                          height: 42.w,
+                          decoration: BoxDecoration(
+                            color: AppColors.primary500,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            color: AppColors.white,
+                            size: 24.sp,
+                          ),
+                        ),
                       ),
                     ),
                   ),

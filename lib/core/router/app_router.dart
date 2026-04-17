@@ -9,7 +9,7 @@ import 'package:lms/features/auth/view/screen/success_view_screen.dart';
 import 'package:lms/features/auth/view/screen/verify_otp_screen.dart';
 import 'package:lms/features/browse_courses/view/screen/home_screen.dart';
 import 'package:lms/features/dashboard/view/dashboard_screen.dart';
-import 'package:lms/features/splash_onboarding/view/first_onboarding_screen.dart';
+import 'package:lms/features/splash_onboarding/view/onboarding_screen.dart';
 import 'package:lms/features/splash_onboarding/view/splash_screen.dart';
 
 import '../../features/choose_your_role/view/screen/choose_your_role_screen.dart';
