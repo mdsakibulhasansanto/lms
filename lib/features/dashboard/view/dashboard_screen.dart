@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lms/features/dashboard/view/settings_screen.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../browse_courses/view/screen/home_screen.dart';
+import 'activities_screen.dart';
+import 'courses_screen.dart';
+import 'instructor_screen.dart';
 
 
 class DashboardScreen extends StatefulWidget {
@@ -27,137 +31,102 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appBackground,
       body: IndexedStack(
         index: _selectedIndex,
         children: _screens,
       ),
-      bottomNavigationBar: NavigationBarTheme(
-        data: NavigationBarThemeData(
-          indicatorColor: Colors.transparent,
-          backgroundColor: AppColors.white,
-          labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-            if (states.contains(WidgetState.selected)) {
-              return AppTextStyles.inter_regular_12(color: AppColors.primary500);
-            }
-            return AppTextStyles.inter_regular_12(color: AppColors.grey500);
-          }),
-          iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((states) {
-            if (states.contains(WidgetState.selected)) {
-              return IconThemeData(color: AppColors.primary500);
-            }
-            return IconThemeData(color: AppColors.grey500);
-          }),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.r),
+          topRight: Radius.circular(20.r),
         ),
-        child: NavigationBar(
-          selectedIndex: _selectedIndex,
-          backgroundColor: AppColors.white,
-          onDestinationSelected: (int index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          destinations: [
-            NavigationDestination(
-              icon: Icon(
-                Icons.home_rounded,
-                color: _selectedIndex == 0 ? AppColors.primary500 : AppColors.grey500,
-                size: 24.sp,
-              ),
-              label: 'Home',
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.r),
+              topRight: Radius.circular(20.r),
             ),
-            NavigationDestination(
-              icon: Icon(
-                Icons.play_circle_outline_rounded,
-                color: _selectedIndex == 1 ? AppColors.primary500 : AppColors.grey500,
-                size: 24.sp,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.grey300.withOpacity(0.4),
+                blurRadius: 12,
+                offset: Offset(0, -4),
               ),
-              label: 'Courses',
+            ],
+          ),
+          child: NavigationBarTheme(
+            data: NavigationBarThemeData(
+              indicatorColor: Colors.transparent,
+              backgroundColor: Colors.transparent,
+              labelTextStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
+                if (states.contains(WidgetState.selected)) {
+                  return AppTextStyles.inter_regular_12(color: AppColors.primary500);
+                }
+                return AppTextStyles.inter_regular_12(color: AppColors.grey500);
+              }),
+              iconTheme: WidgetStateProperty.resolveWith<IconThemeData>((states) {
+                if (states.contains(WidgetState.selected)) {
+                  return IconThemeData(color: AppColors.primary500);
+                }
+                return IconThemeData(color: AppColors.grey500);
+              }),
             ),
-            NavigationDestination(
-              icon: Icon(
-                Icons.person_outline_rounded,
-                color: _selectedIndex == 2 ? AppColors.primary500 : AppColors.grey500,
-                size: 24.sp,
-              ),
-              label: 'Instructor',
+            child: NavigationBar(
+              selectedIndex: _selectedIndex,
+              backgroundColor: Colors.transparent,
+              onDestinationSelected: (int index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              destinations: [
+                NavigationDestination(
+                  icon: Icon(
+                    Icons.home_rounded,
+                    color: _selectedIndex == 0 ? AppColors.primary500 : AppColors.grey500,
+                    size: 24.sp,
+                  ),
+                  label: 'Home',
+                ),
+                NavigationDestination(
+                  icon: Icon(
+                    Icons.play_circle_outline_rounded,
+                    color: _selectedIndex == 1 ? AppColors.primary500 : AppColors.grey500,
+                    size: 24.sp,
+                  ),
+                  label: 'Courses',
+                ),
+                NavigationDestination(
+                  icon: Icon(
+                    Icons.person_outline_rounded,
+                    color: _selectedIndex == 2 ? AppColors.primary500 : AppColors.grey500,
+                    size: 24.sp,
+                  ),
+                  label: 'Instructor',
+                ),
+                NavigationDestination(
+                  icon: Icon(
+                    Icons.bar_chart_rounded,
+                    color: _selectedIndex == 3 ? AppColors.primary500 : AppColors.grey500,
+                    size: 24.sp,
+                  ),
+                  label: 'Activities',
+                ),
+                NavigationDestination(
+                  icon: Icon(
+                    Icons.settings_outlined,
+                    color: _selectedIndex == 4 ? AppColors.primary500 : AppColors.grey500,
+                    size: 24.sp,
+                  ),
+                  label: 'Settings',
+                ),
+              ],
             ),
-            NavigationDestination(
-              icon: Icon(
-                Icons.bar_chart_rounded,
-                color: _selectedIndex == 3 ? AppColors.primary500 : AppColors.grey500,
-                size: 24.sp,
-              ),
-              label: 'Activities',
-            ),
-            NavigationDestination(
-              icon: Icon(
-                Icons.settings_outlined,
-                color: _selectedIndex == 4 ? AppColors.primary500 : AppColors.grey500,
-                size: 24.sp,
-              ),
-              label: 'Settings',
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
-
-
-class CoursesScreen extends StatelessWidget {
-  const CoursesScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Course data not yet'),
-      ),
-    );
-  }
-}
-
-
-class InstructorScreen extends StatelessWidget {
-  const InstructorScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('InstructorScreen data not yet'),
-      ),
-    );
-  }
-}
-
-
-class ActivitiesScreen extends StatelessWidget {
-  const ActivitiesScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('ActivitiesScreen data not yet'),
-      ),
-    );
-  }
-}
-
-
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('Settings Screen data not yet'),
-      ),
-    );
-  }
-}
-
-
